@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>"登顶"入围赛打歌抽取</title>
+  <style>
+    * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #000000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .container {
+    text-align: center;
+    background-color: rgb(255, 255, 255);
+    padding: 80px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 800px;
+  }
+  
+  h1 {
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .participants {
+    margin-bottom: 20px;
+  }
+  
+  input {
+    width: 80%;
+    padding: 10px;
+    font-size: 16px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  button {
+    background-color: #ff4444;
+    color: white;
+    font-size: 18px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+  
+  button:hover {
+    background-color: #ff0000;
+  }
+  
+  .result {
+    margin-top: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #000000;
+  }
+  
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 style="color:rgb(255, 0, 0)">"登顶"入围赛打歌抽取</h1>
+    <div class="participants">
+        <button id="drawButton">抽！</button>
+        <div id="result" class="result"></div>
+        <ul id="songList" class="song-list"></ul>
+    </div>
+  </div>
+
+  <script>
+        // 曲库1、曲库2、曲库3的歌曲列表
+        const library1 = [
+"Demiurge",
+"Initialize",
+"もぺもぺ",
+"HumaN",
+"Rainy Heart",
+"Sparkle New Life",
+"Ποσειδών",
+ "光",
+ "Colorful Days♪",
+"Eradication Catastrophe",
+ "Leave All Behind",
+ "-Arkhei-",
+ "Clock Paradox",
+ "Next Time",
+ "云女孩",
+"Glaciaxion",
+"Sultan Rage",
+"Le temps perdu"];
+        const library2 = ["Cuvism³",  
+"Infinity Heaven",  
+"Unorthodox Thoughts",  
+"Wavetapper",  
+"XING",  
+"风屿",  
+"Apocalyptic",  
+"Chronologika",  
+"Class Memories",  
+"cryout",  
+"Demonkin",  
+"Get Ready!!",  
+"Grimheart",  
+"Journey with You",  
+"Comet",  
+"Credits",  
+"Dlyrotz",  
+"Äventyr",  
+"Another Me (Rising Sun Traxx)",  
+"Crave Wave",  
+"Time to Night Sky (feat. Lee Yu Jin)",  
+"WATER",  
+"心之所向",  
+"神話",  
+"Apocalypse",  
+"Bitterblossom",  
+"Eternal Snow",  
+"I Must Say No",  
+"今天不是明天",  
+"-SURREALISM-",  
+"Diamond Eyes",  
+"Engine x Start!! (melody mix)",  
+"Winter ↑cube↓",  
+"With You",  
+"桜樹街道",  
+"Another Round",  
+"JunXion Between Life And Death(VIP Mix)",  
+"Snow Desert",  
+"万吨匿名信",  
+"心の記憶",  
+"盏茗",  
+"Bougainvillea",  
+"Broken Sky",  
+"Dreamland",  
+"Electron",  
+"Rubbish Sorting",  
+"游园地",  
+"Aphasia",  
+"Khalid",  
+"Miracle Forest (VIP Mix)",  
+"NYA!!! (Phigros ver.)",  
+"萤火虫の怨",
+"Bloom",  
+"Burn",  
+"bye",  
+"On And On!!",  
+"Sein",  
+"青芽",  
+"Break Over(AT)",  
+"もぺもぺ(AT)",  
+"Cereris",  
+"Doppelganger",  
+"FULi AUTO SHOOTER",  
+"life flashes before weeb eyes",  
+"Quantum Hyperspace",  
+"Trojan",  
+"いざ、参ります",  
+"大和撫子 -Wild Dances-",  
+"幽世桔梗",  
+"月下缭乱",  
+"混乱-Confusion",  
+"黄金之城 (GOLD TOWN)",  
+"风屿(AT)",  
+"Artificial Existence",  
+"BRAIN HACKER",  
+"Disorder",  
+"Eltaw",  
+"FULi AUTO BUSTER",  
+"GOODWORLD",  
+"HAZARD",  
+"INFiNiTE ENERZY -Overdoze-",  
+"Manifold Hypothesis",  
+"mechanted",  
+"modulus",  
+"Ramification",  
+"Random",  
+"Triumph & Regret",  
+"ρars/ey",  
+"月詠に鳴る",  
+"996",  
+"Anomaly (Deleted in Ver.1.6.6)",  
+"Brave Notes",  
+"DataErr0r",  
+"Hardcore Kwaya",  
+"inferior",  
+"micro.wav",  
+"Nick of Time",  
+"NightTheater",  
+"S.A.T.E.L.L.I.T.E.",  
+"Secret Illumination",  
+"Shine After",  
+"The Mountain Eater",  
+"volcanic",  
+"Xenolith",  
+"A journey to the moonlight",  
+"Believe Light (feat. 果丸哒呦)",  
+"Break Through The Barrier",  
+"Cervelle Connexion",  
+"Fixations Toward the Stars",  
+"Luminescence",  
+"Luminescent",  
+"Magenta Potion",  
+"Originally",  
+"Shadow",  
+"ジングルベル(Jingle Bell)",  
+"ストレイソウル・アラウンド",  
+"君往何处 (Quo Vadis)",  
+"狂喜蘭舞",  
+"Cipher : /2&//< |0",  
+"Dead Soul",  
+"ENERGY SYNERGY MATRIX",  
+"Find_Me",  
+"Future Mind",  
+"GOODBOUNCE",  
+"MOBILYS",  
+"Parallel Retrogression (Game Ver.)",  
+"Rainy Season",  
+"TECHNOPOLIS 2085",  
+"重生",  
+"Drop It",  
+"El último baile",  
+"Final Step!",  
+"Now Is The Time, Do It",  
+"Re_Nascence (Psystyle Ver.)",  
+"Speed Up!",  
+"Spotlight",  
+"Bonus Time",  
+"Khronostasis Katharsis",  
+"MARENOL",  
+"Träne",  
+"You are the Miserable",  
+"开心病",  
+"Break Over",  
+"End Me",  
+"Get Back",  
+"GOODTEK",  
+"Orthodox",  
+"Realms",  
+"The Chariot ~REVIIVAL~",  
+"華灯爱"];
+        const library3 = [
+"Bounded Quietude",
+"Chronos Collapse - La Campanella",
+"CROSS†SOUL",
+"Distorted Fate",
+"Fractured Angel",
+"祈 -我ら神祖と共に歩む者なり-",
+"+ERABY+E CONNEC+10N",
+"Antithese(AT)",
+"Shadow(AT)",
+"a truth seeker -Communication with Utopia will be lost-",
+"Ad astra per aspera",
+"Chronostasis",
+"DESTRUCTION 3,2,1",
+"Lyrith -迷宮リリス-",
+"RESSiSTANCE",
+"Retribution",
+"明鏡烈火",
+"零號車輛",
+"Cthugha(AT)",
+"S.A.T.E.L.L.I.T.E.(AT)",
+"Aleph-0",
+"c.s.q.n.",
+"GOODRAGE",
+"Igallta",
+"K.Moe (VIP)",
+"Non-Melodic Ragez (MUG Edit)",
+"Palescreen",
+"Rrhar'il",
+"望影の方舟Six",
+"TECHNOPOLIS 2085(AT)",
+"Compute It With Some Devilish Alcoholic Steampunk Engines",
+"Cthugha",
+"Der Richter",
+"G.V.N. (Glitter, Vomitus and Neon)",
+"PRAGMATISM -RESURRECTION-",
+"Re：End of a Dream",
+"SIGMA",
+"valor/starcross",
+"千紫万紅",
+"You are the Miserable（AT）",
+"ATHAZA",
+"Concvssion",
+"Horizon Blue",
+"iL-Artifact",
+"Kerberos",
+"opia",
+"Poison AND÷OR Affection",
+"Credits（AT）",
+"双重间谍 (Double Agent)",
+"インフェルノシティ",
+"ぱぴぷぴぷぴぱ",
+"Silence is Golden,Speech is Golden",
+"Inverted World",
+"GOODFORTUNE",
+"El Condor Pasa (Phigros Edit)",
+"Don't Never Around",
+"Another Me (KALPA)",
+"月詠に鳴る(AT)",
+"Chronomia",
+"Better Graphic Animation",
+"After Dawn",
+"暗夜苏醒 (REANIMATE)",
+"Upshift",
+"PANIC PARADISE",
+"NO ONE YES MAN",
+"Nhelv",
+"Labyrinth in Kowloon: Walled World",
+"After Dawn",
+"Better Graphic Animation",
+"Chronomia",
+"Feast远东之宴",
+"Indelible Scar",
+"Stasis",
+"聖夜讃歌",
+"雪降り、メリクリ",
+"青丘",
+"Antithese",
+"Dance with Silence",
+"energy trixxx",
+"Protoflicker",
+"RIPPER",
+"Schadenfreude",
+"Spasmodic",
+"Temporal Shifting",
+"Thrash force",
+"尊師 ～The Guru～",
+"Ark",
+"Crush BETA",
+"Freaky Undulations ~Noble Knights of Tune~",
+"Pixel Rebelz",
+"Pont des souvenirs",
+"Reimei",
+"Starduster",
+"[PRAW]",
+"幻影鬼魅 (PLEASE)",
+"Rrhar'il(AT)",
+"Distorted Fate(AT)",
+"Igallta(AT)",
+"DESTRUCTION 3,2,1(AT)",
+"+ERABY+E CONNEC+10N(AT)",
+"祈 -我ら神祖と共に歩む者なり-(AT)",
+"Cuvism³(AT)",
+"Re：End of a Dream(AT)",
+"Stasis(AT)",
+"INFiNiTE ENERZY -Overdoze-(AT)",
+"PRAGMATISM -RESURRECTION-(AT)",
+"Spasmodic(AT)",
+"ATHAZA(AT)",
+"Lyrith -迷宮リリス-(AT)",
+"volcanic(AT)",
+"Indelible Scar(AT)",
+"狂喜蘭舞(AT)"];
+
+        // 随机抽取一首歌的函数
+        function getRandomSong(library) {
+            const randomIndex = Math.floor(Math.random() * library.length);
+            return library[randomIndex];
+        }
+
+        // 点击按钮时执行的功能
+        document.getElementById("drawButton").addEventListener("click", function() {
+            // 从每个曲库中随机抽取一首歌
+            const song1 = getRandomSong(library1);
+            const song2 = getRandomSong(library2);
+            const song3 = getRandomSong(library3);
+
+            // 显示抽取的歌曲
+            const songListElement = document.getElementById("songList");
+            songListElement.innerHTML = `
+                <p>11~12级曲目：${song1}</p>
+                <p>13~14级曲目：${song2}</p>
+                <p>15~16级曲目：${song3}</p>
+            `;
+        });
+  </script>
+</body>
+</html>
