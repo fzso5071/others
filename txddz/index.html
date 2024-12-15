@@ -76,8 +76,7 @@
     <h1 style="color:rgb(255, 0, 0)">"登顶"入围赛打歌抽取</h1>
     <p>若无AT标识皆为IN</p>
     <div class="participants">
-        <button id="drawButton">抽！</button>
-        <div id="result" class="result"></div>
+        <div id="result" class="result"><h2>抽到的歌：</h2></div>
         <ul id="songList" class="song-list"></ul>
     </div>
   </div>
@@ -373,8 +372,8 @@
             return library[randomIndex];
         }
 
-        // 点击按钮时执行的功能
-        document.getElementById("drawButton").addEventListener("click", function() {
+        // 页面加载时自动抽取
+        window.onload = function() {
             // 从每个曲库中随机抽取一首歌
             const song1 = getRandomSong(library1);
             const song2 = getRandomSong(library2);
@@ -387,7 +386,7 @@
                 <p>13~14级曲目：${song2}</p>
                 <p>15~16级曲目：${song3}</p>
             `;
-        });
+        }
   </script>
 </body>
 </html>
